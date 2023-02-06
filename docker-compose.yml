@@ -2,8 +2,10 @@ version: '2.3'
 
 services:
   statping:
-    container_name: statping
-    image: adamboutcher/statping-ng:latest
+    container_name: statpingng_statping
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - statping_data:/app
