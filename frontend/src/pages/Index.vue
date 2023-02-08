@@ -23,7 +23,8 @@
                     {{service.name}}
                     <MessagesIcon :messages="service.messages"/>
                   </router-link>
-                  <span class="badge float-right" :class="{'bg-success': service.online, 'bg-danger': !service.online }">{{service.online ? "ONLINE" : "OFFLINE"}}</span>
+                  <span v-if="service.maintenance_mode" class="badge float-right bg-maintenance">MAINTENANCE</span>
+                  <span v-else class="badge float-right" :class="{'bg-success': service.online, 'bg-danger': !service.online }">{{service.online ? "ONLINE" : "OFFLINE"}}</span>
                   <GroupServiceFailures :service="service"/>
                   <IncidentsBlock :service="service"/>
               </div>

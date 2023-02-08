@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gorilla/mux"
 	"github.com/statping-ng/statping-ng/database"
 	"github.com/statping-ng/statping-ng/types/errors"
@@ -8,7 +10,6 @@ import (
 	"github.com/statping-ng/statping-ng/types/hits"
 	"github.com/statping-ng/statping-ng/types/services"
 	"github.com/statping-ng/statping-ng/utils"
-	"net/http"
 )
 
 type serviceOrder struct {
@@ -55,6 +56,7 @@ func apiServiceHandler(r *http.Request) interface{} {
 		return err
 	}
 	srv = srv.UpdateStats()
+	srv = srv.CheckMaintenance()
 	return *srv
 }
 

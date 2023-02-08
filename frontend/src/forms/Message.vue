@@ -54,6 +54,16 @@
             </div>
           </div>
 
+          <div class="form-group row">
+            <label for="notify_method" class="col-sm-4 col-form-label">{{ $t('maintenance_mode') }}</label>
+            <div class="col-sm-8">
+              <span @click="message.maintenance_mode = !!message.maintenance_mode" class="switch">
+                <input v-model="message.maintenance_mode" type="checkbox" class="switch" id="switch-maint">
+                <label for="switch-maint">{{ $t('maintenance_desc') }}</label>
+              </span>
+            </div>
+          </div>
+
           <div v-if="message.notify" class="form-group row">
             <label for="notify_method" class="col-sm-4 col-form-label">{{ $t('notify_method') }}</label>
             <div class="col-sm-8">
