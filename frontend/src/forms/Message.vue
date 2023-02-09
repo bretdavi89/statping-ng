@@ -54,7 +54,7 @@
             </div>
           </div>
 
-          <div class="form-group row">
+          <div v-if="message.service !== 0" class="form-group row">
             <label for="notify_method" class="col-sm-4 col-form-label">{{ $t('maintenance_mode') }}</label>
             <div class="col-sm-8">
               <span @click="message.maintenance_mode = !!message.maintenance_mode" class="switch">
