@@ -51,7 +51,8 @@ type Service struct {
 	NotifyAfter         int64                 `gorm:"column:notify_after" json:"notify_after" yaml:"notify_after" scope:"user,admin"`
 	AllowNotifications  null.NullBool         `gorm:"default:true;column:allow_notifications" json:"allow_notifications" yaml:"allow_notifications" scope:"user,admin"`
 	UpdateNotify        null.NullBool         `gorm:"default:true;column:notify_all_changes" json:"notify_all_changes" yaml:"notify_all_changes" scope:"user,admin"` // This Variable is a simple copy of `core.CoreApp.UpdateNotify.Bool`
-	DownText            string                `gorm:"-" json:"-" yaml:"-"`                                                                                           // Contains the current generated Downtime Text 	// Is 'true' if the user has already be informed that the Services now again available // Is 'true' if the user has already be informed that the Services now again available
+	MaintenanceMode     bool                  `gorm:"-" json:"maintenance_mode" yaml:"-"`
+	DownText            string                `gorm:"-" json:"-" yaml:"-"` // Contains the current generated Downtime Text 	// Is 'true' if the user has already be informed that the Services now again available // Is 'true' if the user has already be informed that the Services now again available
 	LastStatusCode      int                   `gorm:"-" json:"status_code" yaml:"-"`
 	LastLookupTime      int64                 `gorm:"-" json:"-" yaml:"-"`
 	LastLatency         int64                 `gorm:"-" json:"-" yaml:"-"`

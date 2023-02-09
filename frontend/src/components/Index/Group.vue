@@ -8,7 +8,8 @@
                   {{service.name}}
                   <MessagesIcon :messages="service.messages"/>
                 </router-link>
-                <span class="badge text-uppercase float-right" :class="{'bg-success': service.online, 'bg-danger': !service.online }">
+                <span v-if="service.maintenance_mode" class="badge float-right bg-maintenance">MAINTENANCE</span>
+                <span v-else class="badge text-uppercase float-right" :class="{'bg-success': service.online, 'bg-danger': !service.online }">
                     {{service.online ? $t('online') : $t('offline')}}
                 </span>
 

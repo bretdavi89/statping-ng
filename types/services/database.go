@@ -2,11 +2,12 @@ package services
 
 import (
 	"fmt"
+	"sort"
+
 	"github.com/statping-ng/statping-ng/database"
 	"github.com/statping-ng/statping-ng/types/errors"
 	"github.com/statping-ng/statping-ng/types/metrics"
 	"github.com/statping-ng/statping-ng/utils"
-	"sort"
 )
 
 var (
@@ -90,6 +91,7 @@ func All() map[int64]*Service {
 func AllInOrder() []Service {
 	var services []Service
 	for _, service := range allServices {
+		service.CheckMaintenance()
 		service.UpdateStats()
 		services = append(services, *service)
 	}

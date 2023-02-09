@@ -141,7 +141,9 @@ const english = {
     number_of_days_for_service_desc: "How many days of history show for a service.",
     show_graphs: "Show Graphs",
     show_graphs_desc: "Show graphs for services. If off, all graphs will be hidden despite their individual settings.",
-    show_graph: "Show Graph"
+    show_graph: "Show Graph",
+    maintenance_desc: "Put service in maintenance mode.",
+    maintenance_mode: "Maintenance Mode"
 }
 
 export default english

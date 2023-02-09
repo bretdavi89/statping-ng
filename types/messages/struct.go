@@ -1,8 +1,9 @@
 package messages
 
 import (
-	"github.com/statping-ng/statping-ng/types/null"
 	"time"
+
+	"github.com/statping-ng/statping-ng/types/null"
 )
 
 // Message is for creating Announcements, Alerts and other messages for the end users
@@ -19,4 +20,5 @@ type Message struct {
 	NotifyBeforeScale string         `gorm:"column:notify_before_scale" json:"notify_before_scale" scope:"user,admin"`
 	CreatedAt         time.Time      `gorm:"column:created_at" json:"created_at" json:"created_at"`
 	UpdatedAt         time.Time      `gorm:"column:updated_at" json:"updated_at" json:"updated_at"`
+	MaintenanceMode   null.NullBool  `gorm:"column:maintenance_mode" json:"maintenance_mode"`
 }

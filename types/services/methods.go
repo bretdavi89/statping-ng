@@ -6,15 +6,16 @@ import (
 	"crypto/x509"
 	"encoding/hex"
 	"fmt"
+	"io/ioutil"
+	"sort"
+	"strconv"
+	"time"
+
 	"github.com/statping-ng/statping-ng/types"
 	"github.com/statping-ng/statping-ng/types/errors"
 	"github.com/statping-ng/statping-ng/types/failures"
 	"github.com/statping-ng/statping-ng/types/hits"
 	"github.com/statping-ng/statping-ng/utils"
-	"io/ioutil"
-	"sort"
-	"strconv"
-	"time"
 )
 
 const limitedFailures = 25
@@ -258,6 +259,18 @@ func (s *Service) UpdateStats() *Service {
 		Hits:     s.AllHits().Count(),
 		FirstHit: s.FirstHit().CreatedAt,
 	}
+	return s
+}
+
+func (s *Service) CheckMaintenance() *Service {
+	active := false
+	for _, msg := range s.Messages {
+		if msg.IsActive() && msg.MaintenanceMode.Bool {
+			active = true
+		}
+	}
+
+	s.MaintenanceMode = active
 	return s
 }
 
