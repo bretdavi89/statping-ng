@@ -420,7 +420,7 @@ func RecordSuccess(s *Service) {
 func RecordFailure(s *Service, issue, reason string) {
 
 	// If failure threshold has not been met, don't record actual failure
-	if s.thresholdCount < s.FailureThreshold {
+	if s.thresholdCount < s.FailureThreshold.Int64 {
 		s.thresholdCount++
 		log.Warnln(fmt.Sprintf("Service %v Failing: %v | Threshold: %v Current Failed Attempts: %v", s.Name, issue, s.FailureThreshold, s.thresholdCount))
 		return
