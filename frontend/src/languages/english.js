@@ -143,7 +143,8 @@ const english = {
     show_graphs_desc: "Show graphs for services. If off, all graphs will be hidden despite their individual settings.",
     show_graph: "Show Graph",
     maintenance_desc: "Put service in maintenance mode.",
-    maintenance_mode: "Maintenance Mode"
+    maintenance_mode: "Maintenance Mode",
+    failure_threshold: "Failure Threshold"
 }
 
 export default english

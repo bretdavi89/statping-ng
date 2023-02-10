@@ -49,6 +49,7 @@ type Service struct {
 	SleepDuration       time.Duration         `gorm:"-" json:"-" yaml:"-"`
 	LastResponse        string                `gorm:"-" json:"-" yaml:"-"`
 	NotifyAfter         int64                 `gorm:"column:notify_after" json:"notify_after" yaml:"notify_after" scope:"user,admin"`
+	FailureThreshold    null.NullInt64        `gorm:"default:0;column:failure_threshold" json:"failure_threshold" yaml:"failure_threshold" scope:"user,admin"`
 	AllowNotifications  null.NullBool         `gorm:"default:true;column:allow_notifications" json:"allow_notifications" yaml:"allow_notifications" scope:"user,admin"`
 	UpdateNotify        null.NullBool         `gorm:"default:true;column:notify_all_changes" json:"notify_all_changes" yaml:"notify_all_changes" scope:"user,admin"` // This Variable is a simple copy of `core.CoreApp.UpdateNotify.Bool`
 	MaintenanceMode     bool                  `gorm:"-" json:"maintenance_mode" yaml:"-"`
@@ -65,6 +66,7 @@ type Service struct {
 	Checkins            []*checkins.Checkin   `gorm:"foreignkey:service;association_foreignkey:id" json:"checkins,omitempty" yaml:"-" scope:"user,admin"`
 	Failures            []*failures.Failure   `gorm:"-" json:"failures,omitempty" yaml:"-" scope:"user,admin"`
 
+	thresholdCount   int64 `gorm:"-" json:"-" yaml:"-"`
 	notifyAfterCount int64 `gorm:"-" json:"-" yaml:"-"`
 	prevOnline       bool  `gorm:"-" json:"-" yaml:"-"`
 }
