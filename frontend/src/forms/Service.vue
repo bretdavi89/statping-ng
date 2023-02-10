@@ -63,6 +63,15 @@
                 </div>
             </div>
 
+            <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">{{ $t('failure_threshold') }}</label>
+                    <div class="col-sm-8">
+                        <span class="slider-info">{{parseInt(service.failure_threshold) === 0 ? "First Failure" : service.failure_threshold+' Failures'}}</span>
+                        <input v-model="service.failure_threshold" type="range" name="failure_threshold" class="slider" id="failure_threshold" min="0" max="20">
+                        <small class="form-text text-muted">Service considered offline after {{parseInt(service.failure_threshold) === 0 ? "First Failure" : service.failure_threshold+' Failures'}} </small>
+                    </div>
+            </div>
+
             <div v-if="service.type !== 'static'" class="form-group row">
                 <label for="service_interval" class="col-sm-4 col-form-label">{{ $t('check_interval') }}</label>
                 <div class="col-sm-6">
@@ -258,9 +267,9 @@
                 <div v-if="service.allow_notifications"  class="form-group row">
                     <label class="col-sm-4 col-form-label">{{ $t('notify_after') }}</label>
                     <div class="col-sm-8">
-                        <span class="slider-info">{{service.notify_after === 0 ? "First Failure" : service.notify_after+' Failures'}}</span>
+                        <span class="slider-info">{{parseInt(service.notify_after) === 0 ? "First Failure" : service.notify_after+' Failures'}}</span>
                         <input v-model="service.notify_after" type="range" name="notify_after" class="slider" id="notify_after" min="0" max="20">
-                        <small class="form-text text-muted">Send Notification after {{service.notify_after === 0 ? 'the first Failure' : service.notify_after+' Failures'}} </small>
+                        <small class="form-text text-muted">Send Notification after {{parseInt(service.notify_after) === 0 ? 'the first Failure' : service.notify_after+' Failures'}} </small>
                     </div>
                 </div>
                 <div v-if="service.allow_notifications" class="form-group row">
@@ -318,6 +327,7 @@
                   allow_notifications: true,
                   notify_all_changes: true,
                   notify_after: 2,
+                  failure_threshold: 0,
                   public: true,
                   show_graph: true,
                   tls_cert: "",
@@ -408,6 +418,7 @@
               s.timeout = parseInt(s.timeout)
               s.port = parseInt(s.port)
               s.notify_after = parseInt(s.notify_after)
+              s.failure_threshold = parseInt(s.failure_threshold)
               s.expected_status = parseInt(s.expected_status)
               s.order = parseInt(s.order)
 

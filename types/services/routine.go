@@ -395,6 +395,7 @@ func CheckHttp(s *Service, record bool) (*Service, error) {
 
 // RecordSuccess will create a new 'hit' record in the database for a successful/online service
 func RecordSuccess(s *Service) {
+	s.thresholdCount = 0
 	s.LastOnline = utils.Now()
 	s.Online = true
 	hit := &hits.Hit{
@@ -417,6 +418,15 @@ func RecordSuccess(s *Service) {
 
 // RecordFailure will create a new 'Failure' record in the database for a offline service
 func RecordFailure(s *Service, issue, reason string) {
+
+	// If failure threshold has not been met, don't record actual failure
+	if s.thresholdCount < s.FailureThreshold {
+		s.thresholdCount++
+		log.Warnln(fmt.Sprintf("Service %v Failing: %v | Threshold: %v Current Failed Attempts: %v", s.Name, issue, s.FailureThreshold, s.thresholdCount))
+		return
+	} else {
+		s.thresholdCount = 0
+	}
 	s.LastOffline = utils.Now()
 
 	fail := &failures.Failure{
