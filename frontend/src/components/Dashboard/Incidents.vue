@@ -29,6 +29,10 @@
                         <label class="col-sm-4 col-form-label">Description</label>
                         <div class="col-sm-8">
                             <textarea v-model="incident.description" rows="5" name="description" class="form-control" id="description" required></textarea>
+                            <font-awesome-icon
+                                class="mdicon"
+                                icon="fab fa-markdown"
+                            />
                         </div>
                     </div>
 

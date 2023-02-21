@@ -228,3 +228,11 @@ A {
   top:0;
   background: darken($card-background, 10%);
 }
+
+.mdicon {
+  float: right;
+  margin-right: 6px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+}
