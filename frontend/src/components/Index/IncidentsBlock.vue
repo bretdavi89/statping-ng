@@ -1,63 +1,76 @@
 <template>
-    <div class="row">
-        <div v-for="(incident, i) in incidents" class="col-12 mt-2">
-            <span class="braker mt-1 mb-3"></span>
-            <h6>{{incident.title}}
-                <span class="font-2 float-right">{{niceDate(incident.created_at)}}</span>
-            </h6>
-            <div class="font-2 mb-3" v-html="markdown(incident.description)"></div>
-                <IncidentUpdate v-for="(update, i) in incident.updates" v-bind:key="i" :update="update" :admin="false"/>
-        </div>
+  <div class="row">
+    <div
+      v-for="incident in incidents"
+      :key="incident.id"
+      class="col-12 mt-2"
+    >
+      <span class="braker mt-1 mb-3" />
+      <h6>
+        {{ incident.title }}
+        <span class="font-2 float-right">{{ niceDate(incident.created_at) }}</span>
+      </h6>
+      <div
+        class="font-2 mb-3"
+        v-html="markdown(incident.description)"
+      />
+      <IncidentUpdate
+        v-for="(update, i) in incident.updates"
+        :key="i"
+        :update="update"
+        :admin="false"
+      />
     </div>
+  </div>
 </template>
 
 <script>
 import Api from '../../API';
-import IncidentUpdate from "@/components/Elements/IncidentUpdate";
+import IncidentUpdate from '@/components/Elements/IncidentUpdate';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 
 export default {
-  name: 'IncidentsBlock',
-  components: {
-    IncidentUpdate
-  },
-  props: {
+    name: 'IncidentsBlock',
+    components: {
+        IncidentUpdate
+    },
+    props: {
         service: {
             type: Object,
             required: true
         }
     },
-    data() {
+    data () {
         return {
-            incidents: null,
-        }
+            incidents: null
+        };
     },
     mounted () {
-        this.getIncidents()
+        this.getIncidents();
     },
     methods: {
         markdown (m) {
             return DOMPurify.sanitize(marked.parse(m));
         },
-        badgeClass(val) {
-          switch (val.toLowerCase()) {
-            case "resolved":
-              return "badge-success"
-            case "update":
-              return "badge-info"
-            case "investigating":
-              return "badge-danger"
-          }
+        badgeClass (val) {
+            switch (val.toLowerCase()) {
+                case 'resolved':
+                    return 'badge-success';
+                case 'update':
+                    return 'badge-info';
+                case 'investigating':
+                    return 'badge-danger';
+            }
         },
-      async getIncidents() {
-        this.incidents = await Api.incidents_service(this.service.id)
-      },
-      async incident_updates(incident) {
-        return await Api.incident_updates(incident)
-      }
+        async getIncidents () {
+            this.incidents = await Api.incidents_service(this.service.id);
+        },
+        async incident_updates (incident) {
+            return await Api.incident_updates(incident);
+        }
     }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

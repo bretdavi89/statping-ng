@@ -6,9 +6,10 @@
     "node": true
   },
   "parserOptions": {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "sourceType": "module",
-    "ecmaVersion": 2018
+    "ecmaVersion": 2018,
+    "requireConfigFile": false
   },
   "extends": [
     "eslint:recommended",
@@ -48,7 +49,8 @@
         "ignores": [
           "router-link",
           "router-view",
-          "transition"
+          "transition",
+          "font-awesome-icon"
         ]
       }
     ]
