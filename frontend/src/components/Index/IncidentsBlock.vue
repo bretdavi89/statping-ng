@@ -27,8 +27,6 @@
 <script>
 import Api from '../../API';
 import IncidentUpdate from '@/components/Elements/IncidentUpdate';
-import marked from 'marked';
-import DOMPurify from 'dompurify';
 
 export default {
     name: 'IncidentsBlock',
@@ -50,9 +48,6 @@ export default {
         this.getIncidents();
     },
     methods: {
-        markdown (m) {
-            return DOMPurify.sanitize(marked.parse(m));
-        },
         badgeClass (val) {
             switch (val.toLowerCase()) {
                 case 'resolved':
