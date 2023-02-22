@@ -1,25 +1,39 @@
 <template>
-  <div class="row">
-    <div
-      v-for="incident in incidents"
-      :key="incident.id"
-      class="col-12 mt-2"
-    >
-      <span class="braker mt-1 mb-3" />
-      <h6>
-        {{ incident.title }}
-        <span class="font-2 float-right">{{ niceDate(incident.created_at) }}</span>
-      </h6>
+  <div
+    v-if="incidents.length > 0"
+  >
+    <div class="row">
+      <h5
+        class="h5 col-12 mb-3 mt-2 text-dim"
+      >
+        <font-awesome-icon
+          :icon="expanded ? 'minus' : 'plus'"
+          class="pointer mr-3"
+          @click="toggle"
+        /> {{ $t('incidents') }}
+      </h5>
       <div
-        class="font-2 mb-3"
-        v-html="markdown(incident.description)"
-      />
-      <IncidentUpdate
-        v-for="(update, i) in incident.updates"
-        :key="i"
-        :update="update"
-        :admin="false"
-      />
+        v-for="incident in incidents"
+        v-if="expanded"
+        :key="incident.id"
+        class="col-12 mt-2"
+      >
+        <span class="braker mt-1 mb-3" />
+        <h6>
+          {{ incident.title }}
+          <span class="font-2 float-right">{{ niceDate(incident.created_at) }}</span>
+        </h6>
+        <div
+          class="font-2 mb-3"
+          v-html="markdown(incident.description)"
+        />
+        <IncidentUpdate
+          v-for="(update, i) in incident.updates"
+          :key="i"
+          :update="update"
+          :admin="false"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -41,13 +55,17 @@ export default {
     },
     data () {
         return {
-            incidents: null
+            incidents: [],
+            expanded: true
         };
     },
     mounted () {
         this.getIncidents();
     },
     methods: {
+        toggle () {
+            this.expanded = !this.expanded;
+        },
         badgeClass (val) {
             switch (val.toLowerCase()) {
                 case 'resolved':
