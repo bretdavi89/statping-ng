@@ -56,7 +56,7 @@ export default {
     data () {
         return {
             incidents: [],
-            expanded: true
+            expanded: false
         };
     },
     mounted () {

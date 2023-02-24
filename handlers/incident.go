@@ -1,11 +1,12 @@
 package handlers
 
 import (
+	"net/http"
+
 	"github.com/gorilla/mux"
 	"github.com/statping-ng/statping-ng/types/errors"
 	"github.com/statping-ng/statping-ng/types/incidents"
 	"github.com/statping-ng/statping-ng/utils"
-	"net/http"
 )
 
 func findIncident(r *http.Request) (*incidents.Incident, int64, error) {
@@ -22,6 +23,11 @@ func findIncident(r *http.Request) (*incidents.Incident, int64, error) {
 		return nil, id, errors.Missing(&incidents.Incident{}, id)
 	}
 	return checkin, id, nil
+}
+
+func apiAllIncidentsHandler(r *http.Request) interface{} {
+	incidents := incidents.All()
+	return incidents
 }
 
 func apiServiceIncidentsHandler(w http.ResponseWriter, r *http.Request) {
@@ -93,8 +99,12 @@ func apiIncidentUpdateHandler(w http.ResponseWriter, r *http.Request) {
 		sendErrorJson(err, w, r)
 		return
 	}
+	if err := incident.Update(); err != nil {
+		sendErrorJson(err, w, r)
+		return
+	}
 
-	sendJsonAction(incident.Updates, "update", w, r)
+	sendJsonAction(incident, "update", w, r)
 }
 
 func apiDeleteIncidentHandler(w http.ResponseWriter, r *http.Request) {
