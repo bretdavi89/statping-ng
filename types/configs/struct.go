@@ -47,8 +47,9 @@ type DbConfig struct {
 	UseCDN        bool `yaml:"use_cdn" json:"use_cdn"`
 	DisableColors bool `yaml:"disable_colors" json:"disable_colors"`
 
-	NumberOfDaysForService int  `yaml:"number_of_days_for_service" json:"number_of_days_for_service"`
-	ShowGraphs             bool `yaml:"show_graphs" json:"show_graphs"`
+	NumberOfDaysForIncidents int  `yaml:"number_of_days_for_incidents" json:"number_of_days_for_incidents"`
+	NumberOfDaysForService   int  `yaml:"number_of_days_for_service" json:"number_of_days_for_service"`
+	ShowGraphs               bool `yaml:"show_graphs" json:"show_graphs"`
 
 	PostgresSSLMode string `yaml:"postgres_ssl,omitempty" json:"postgres_ssl"`
 

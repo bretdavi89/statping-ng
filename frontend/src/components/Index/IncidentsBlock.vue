@@ -55,12 +55,18 @@ export default {
     },
     data () {
         return {
-            incidents: [],
             expanded: false
         };
     },
-    mounted () {
-        this.getIncidents();
+    computed: {
+        core () {
+            return this.$store.getters.core;
+        },
+        incidents () {
+            const incidents = this.$store.getters.serviceIncidents(this.service.id);
+            const incidentCutoff = this.daysAgo(this.core.number_of_days_for_incidents);
+            return incidents.filter(i => this.isBefore(incidentCutoff, i.created_at));
+        }
     },
     methods: {
         toggle () {
@@ -75,9 +81,6 @@ export default {
                 case 'investigating':
                     return 'badge-danger';
             }
-        },
-        async getIncidents () {
-            this.incidents = await Api.incidents_service(this.service.id);
         },
         async incident_updates (incident) {
             return await Api.incident_updates(incident);

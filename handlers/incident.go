@@ -26,8 +26,8 @@ func findIncident(r *http.Request) (*incidents.Incident, int64, error) {
 }
 
 func apiAllIncidentsHandler(r *http.Request) interface{} {
-	incidents := incidents.All()
-	return incidents
+	incs := incidents.All()
+	return incs
 }
 
 func apiServiceIncidentsHandler(w http.ResponseWriter, r *http.Request) {

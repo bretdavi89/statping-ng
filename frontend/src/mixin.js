@@ -1,5 +1,5 @@
 import Vue from 'vue';
-const { startOfDay, startOfHour, startOfWeek, endOfMonth, endOfHour, startOfToday, startOfTomorrow, startOfYesterday, endOfYesterday, endOfTomorrow, endOfToday, endOfDay, startOfMonth, lastDayOfMonth, subSeconds, getUnixTime, fromUnixTime, differenceInSeconds, formatDistance, addMonths, addSeconds, isWithinInterval } = require('date-fns');
+const { subDays, startOfDay, startOfHour, startOfWeek, endOfMonth, endOfHour, startOfToday, startOfTomorrow, startOfYesterday, endOfYesterday, endOfTomorrow, endOfToday, endOfDay, startOfMonth, lastDayOfMonth, subSeconds, getUnixTime, fromUnixTime, differenceInSeconds, formatDistance, addMonths, addSeconds, isWithinInterval } = require('date-fns');
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
@@ -31,6 +31,9 @@ export default Vue.mixin({
         },
         ago (t1) {
             return formatDistanceToNow(parseISO(t1));
+        },
+        daysAgo (days) {
+            return subDays(this.now(), days);
         },
         daysInMonth (t1) {
             return lastDayOfMonth(t1);

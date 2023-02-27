@@ -59,6 +59,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label>{{ $t('number_of_days_for_incidents') }}</label>
+                            <input v-model="setup.number_of_days_for_incidents" type="text" class="form-control" placeholder="30" id="number_of_days_for_incidents">
+                            <small class="form-text text-muted">{{ $t('number_of_days_for_incidents_desc') }}</small>
+                        </div>
+
+                        <div class="form-group">
                             <label>{{ $t('number_of_days_for_service') }}</label>
                             <input v-model="setup.number_of_days_for_service" type="text" class="form-control" placeholder="90" id="number_of_days_for_service">
                             <small class="form-text text-muted">{{ $t('number_of_days_for_service_desc') }}</small>
@@ -190,6 +196,7 @@
         newsletter: true,
         send_reports: true,
         email: "",
+        number_of_days_for_incidents: 30,
         number_of_days_for_service: 90,
         show_graphs: true,
       }
