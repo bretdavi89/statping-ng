@@ -98,8 +98,10 @@ func apiCoreHandler(w http.ResponseWriter, r *http.Request) {
 	utils.Params.Set("LANGUAGE", app.Language)
 	app.UseCdn = null.NewNullBool(c.UseCdn.Bool)
 	app.AllowReports = null.NewNullBool(c.AllowReports.Bool)
+	app.NumberOfDaysForIncidents = null.NewNullInt64(c.NumberOfDaysForIncidents.Int64)
 	app.NumberOfDaysForService = null.NewNullInt64(c.NumberOfDaysForService.Int64)
 	app.ShowGraphs = null.NewNullBool(c.ShowGraphs.Bool)
+	utils.Params.Set("NUMBER_OF_DAYS_FOR_INCIDENTS", app.NumberOfDaysForIncidents.Int64)
 	utils.Params.Set("NUMBER_OF_DAYS_FOR_SERVICE", app.NumberOfDaysForService.Int64)
 	utils.Params.Set("SHOW_GRAPHS", app.ShowGraphs.Bool)
 

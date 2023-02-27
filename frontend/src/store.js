@@ -193,6 +193,8 @@ export default new Vuex.Store({
             context.commit('setServices', services);
             const messages = await Api.messages();
             context.commit('setMessages', messages);
+            const incidents = await Api.incidents();
+            context.commit('setIncidents', incidents);
             context.commit('setHasPublicData', true);
             const checkins = await Api.checkins();
             context.commit('setCheckins', checkins);

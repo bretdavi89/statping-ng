@@ -57,6 +57,9 @@ func Select() (*Core, error) {
 	if utils.Params.GetString("API_SECRET") != "" {
 		App.ApiSecret = utils.Params.GetString("API_SECRET")
 	}
+	if utils.Params.GetInt64("NUMBER_OF_DAYS_FOR_INCIDENTS") != 30 {
+		App.NumberOfDaysForService = null.NewNullInt64(utils.Params.GetInt64("NUMBER_OF_DAYS_FOR_INCIDENTS"))
+	}
 	if utils.Params.GetInt64("NUMBER_OF_DAYS_FOR_SERVICE") != 90 {
 		App.NumberOfDaysForService = null.NewNullInt64(utils.Params.GetInt64("NUMBER_OF_DAYS_FOR_SERVICE"))
 	}

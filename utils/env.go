@@ -60,6 +60,7 @@ func InitEnvs() {
 	Params.SetDefault("LOGS_MAX_AGE", 28)
 	Params.SetDefault("LOGS_MAX_SIZE", 16)
 	Params.SetDefault("DISABLE_COLORS", false)
+	Params.SetDefault("NUMBER_OF_DAYS_FOR_INCIDENTS", 30)
 	Params.SetDefault("NUMBER_OF_DAYS_FOR_SERVICE", 90)
 	Params.SetDefault("SHOW_GRAPHS", true)
 
