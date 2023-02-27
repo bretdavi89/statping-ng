@@ -78,7 +78,7 @@ export default {
             this.edit = !mode;
         },
         async delete (i) {
-            this.res = await Api.incident_delete(i);
+            await Api.incident_delete(i);
             const incidents = await Api.incidents();
             this.$store.commit('setIncidents', incidents);
         },
