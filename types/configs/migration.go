@@ -2,10 +2,12 @@ package configs
 
 import (
 	"fmt"
+
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pkg/errors"
+	"github.com/statping-ng/statping-ng/database"
 	"github.com/statping-ng/statping-ng/source"
 	"github.com/statping-ng/statping-ng/types/notifications"
 	"github.com/statping-ng/statping-ng/utils"
@@ -99,10 +101,23 @@ func (d *DbConfig) BackupAssets() error {
 	}
 	return nil
 }
+func manualMigrations(db database.Database) error {
+	log.Infoln("Performing Manual migration operations...")
 
-//MigrateDatabase will migrate the database structure to current version.
-//This function will NOT remove previous records, tables or columns from the database.
-//If this function has an issue, it will ROLLBACK to the previous state.
+	// Migration to drop removed notifier column if it exists
+	log.Infoln("Dropping removed notification method from DB")
+	err := db.Where("method = ?", "statping_emailer").Delete(&notifications.Notification{}).Error()
+	if err != nil {
+		log.Errorln("Unable to Drop Column statping_emailer")
+		return err
+	}
+
+	return nil
+}
+
+// MigrateDatabase will migrate the database structure to current version.
+// This function will NOT remove previous records, tables or columns from the database.
+// If this function has an issue, it will ROLLBACK to the previous state.
 func (d *DbConfig) MigrateDatabase() error {
 	var DbModels = []interface{}{&services.Service{}, &users.User{}, &hits.Hit{}, &failures.Failure{}, &messages.Message{}, &groups.Group{}, &checkins.Checkin{}, &checkins.CheckinHit{}, &notifications.Notification{}, &incidents.Incident{}, &incidents.IncidentUpdate{}}
 
@@ -119,6 +134,10 @@ func (d *DbConfig) MigrateDatabase() error {
 			log.Errorln(tx.Error())
 			return tx.Error()
 		}
+	}
+
+	if err := manualMigrations(tx); err != nil {
+		log.Errorln(err)
 	}
 
 	log.Infof("Migrating App to version: %s (%s)", utils.Params.GetString("VERSION"), utils.Params.GetString("COMMIT"))
